@@ -53,3 +53,13 @@
 
 - 默认入口页就是 `index.html`
 - 站内链接已经按同目录相对路径组织好
+
+## 启用提交自检
+
+在新机器 clone 本仓库后，可在仓库根目录执行一次：
+
+```bash
+git config core.hooksPath .githooks
+```
+
+这样 Git 会直接使用仓库内的 `.githooks/pre-commit`，提交前自动拦截本机绝对路径和常见临时文件。
