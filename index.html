@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux 内核中文学习站首页</title>
+  <style>
+    :root{--bg:#f6f8fb;--card:#fff;--text:#1f2937;--muted:#5b6472;--line:#d9e1ec;--primary:#2563eb;--soft:#eff6ff;--green:#0f766e;--gsoft:#ecfeff;--purple:#6d28d9;--psoft:#f5f3ff;--orange:#9a3412;--osoft:#fff7ed;--shadow:0 10px 30px rgba(15,23,42,.08)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.78}
+    .wrap{max-width:1280px;margin:0 auto;padding:28px 20px 56px}
+    .hero{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#fff;border-radius:22px;padding:30px 32px;box-shadow:var(--shadow)}
+    h1{margin:0 0 10px;font-size:40px;line-height:1.15}
+    .subtitle{margin:0;color:rgba(255,255,255,.92)}
+    .hero-grid,.grid,.topic-grid,.phase-grid{display:grid;gap:18px}
+    .hero-grid{margin-top:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .topic-grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+    .phase-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .pill,.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px}
+    .pill{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.16);padding:12px 14px}
+    .panel{margin-top:18px;padding:24px;box-shadow:var(--shadow)}
+    .card{padding:20px}
+    .nav{margin:22px 0 16px;display:flex;flex-wrap:wrap;gap:10px}
+    .nav a,.btn{text-decoration:none;color:var(--primary);background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:999px;font-size:14px;display:inline-block}
+    .btn{margin-top:12px}
+    .panel h2{margin:0 0 14px;font-size:26px}
+    .card h3{margin:0 0 8px;font-size:20px}
+    .tag{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;margin-bottom:12px;border:1px solid transparent}
+    .tag-base{background:var(--gsoft);color:var(--green);border-color:#99f6e4}
+    .tag-core{background:var(--soft);color:var(--primary);border-color:#bfdbfe}
+    .tag-adv{background:var(--psoft);color:var(--purple);border-color:#ddd6fe}
+    ul{margin:8px 0 0;padding-left:20px}
+    li{margin:6px 0}
+    p{margin:0 0 10px}
+    .tip,.note{padding:14px 16px;border-radius:12px;margin-top:12px}
+    .tip{background:var(--soft);border-left:4px solid var(--primary);color:#1e3a8a}
+    .note{background:var(--osoft);border-left:4px solid #f59e0b;color:var(--orange)}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+    th,td{border:1px solid var(--line);padding:12px;vertical-align:top;text-align:left}
+    th{background:#f8fafc}
+    .footer{text-align:center;color:var(--muted);font-size:13px;margin-top:26px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Linux 内核中文学习站</h1>
+      <p class="subtitle">这是一套面向初学者的 Linux 内核中文学习站。你可以先从这里建立整体地图，再按专题页逐步展开学习；不需要先读源码，也不需要先翻内核自带文档。</p>
+      <div class="hero-grid">
+        <div class="pill"><strong>第一次来建议先看这里</strong><br />先读这张首页地图，再从“启动与初始化”开始顺着专题页往后看，或者按你感兴趣的模块直接进入对应专题。</div>
+        <div class="pill"><strong>这套页面的目标</strong><br />让你知道 Linux 内核有哪些大模块、每块负责什么、彼此为什么会互相牵连，而不是只记住一堆零散名词。</div>
+        <div class="pill"><strong>推荐阅读方式</strong><br />先打地基，再看系统能力，接着理解边界、治理、观测，最后进入构建、安全、虚拟化与稳定性；读完总览后，再用细分页把关键路径拆开消化。</div>
+      </div>
+    </section>
+
+    <nav class="nav">
+      <a href="#start">如何开始</a>
+      <a href="#audience">适合谁看</a>
+      <a href="#what">先理解什么</a>
+      <a href="#map">整体地图</a>
+      <a href="#topics">专题入口</a>
+      <a href="#wave1">第一批</a>
+      <a href="#wave2">第二批</a>
+      <a href="#wave3">第三批</a>
+      <a href="#wave4">第四批</a>
+      <a href="#wave5">第五批</a>
+      <a href="#wave6">第六批</a>
+      <a href="#wave7">第七批</a>
+      <a href="#wave8">第八批</a>
+      <a href="#wave9">第九批</a>
+      <a href="#wave10">第十批</a>
+      <a href="#wave11">第十一批</a>
+      <a href="#wave12">第十二批</a>
+      <a href="#wave13">第十三批</a>
+      <a href="#wave14">第十四批</a>
+      <a href="#wave15">第十五批</a>
+      <a href="#wave16">第十六批</a>
+      <a href="#wave17">第十七批</a>
+      <a href="#wave18">第十八批</a>
+      <a href="#wave19">第十九批</a>
+      <a href="#wave20">第二十批</a>
+      <a href="#wave21">第二十一批</a>
+      <a href="#wave22">第二十二批</a>
+      <a href="#relations">模块关系</a>
+      <a href="#advice">使用建议</a>
+    </nav>
+
+    <section class="panel" id="start">
+      <h2>第一次打开建议怎么用</h2>
+      <div class="grid">
+        <div class="card"><h3>先看这页</h3><p>这页是整套内容的首页，负责先铺开 Linux 内核的大模块、学习顺序和专题入口。第一次来到这里时，直接从 `index.html` 开始就可以。</p></div>
+        <div class="card"><h3>再按顺序读</h3><p>如果你想系统读，建议先从“启动与初始化”开始，再顺着每个专题页里的“下一主题”往后走；如果你只想补某一块，也可以直接从专题入口跳转。</p></div>
+        <div class="card"><h3>适合怎样使用</h3><p>整站都放在同一个目录里，页面之间使用相对链接，适合直接打包分享、放进 GitHub 仓库，或者挂到 GitHub Pages 这类静态托管环境。</p></div>
+      </div>
+      <div class="tip">如果你是第一次打开这套内容，又不知道该从哪里开始，默认就从 `index.html` 开始。</div>
+    </section>
+
+    <section class="panel" id="audience">
+      <h2>适合谁看</h2>
+      <div class="grid">
+        <div class="card"><h3>适合</h3><ul><li>想先建立 Linux 内核整体认知的初学者</li><li>已经会写用户态程序，但还没把内核模块关系串起来的人</li><li>想先看中文总体地图，再决定后续深入哪一块的人</li><li>希望把专题页当作提问索引、后续逐页深入的人</li></ul></div>
+        <div class="card"><h3>暂时不以这类需求为主</h3><ul><li>需要逐行源码导读的人</li><li>想系统翻译内核 Documentation 原文的人</li><li>只想快速查某个内核函数细节的人</li><li>已经非常熟悉整体结构、只缺实现细枝末节的人</li></ul></div>
+        <div class="card"><h3>最合适的使用姿势</h3><p>先把这里当成 Linux 内核的中文地图站：先知道模块职责、边界和关系，再带着问题进入源码、官方文档或更细的专题资料。这样更不容易一开始就陷进局部细节。</p></div>
+      </div>
+      <div class="note">这套页面最适合“先建立方向感，再逐步下钻”的学习方式，而不是替代源码、手册或 API 参考。</div>
+    </section>
+
+    <section class="panel" id="what">
+      <h2>先理解什么</h2>
+      <div class="grid">
+        <div class="card"><h3>内核不是一个功能</h3><p>Linux 内核不是单一模块，而是一整套系统管理能力：CPU、内存、文件、网络、设备、安全和隔离都归它管。你以后看到的每个子系统，都是它这个“大管家”中的一部分。</p></div>
+        <div class="card"><h3>先懂边界</h3><p>先知道每块负责什么、不负责什么，比一开始理解实现细节更重要。这样后续你就不会把文件系统、块层、驱动、设备模型、总线这些概念混在一起。</p></div>
+        <div class="card"><h3>先懂关系</h3><p>内核学习最关键的是关系感：调度和线程是什么关系，内存和文件系统为什么互相牵连，容器和虚拟化又为什么不是一回事。</p></div>
+      </div>
+      <div class="tip">把这套页面当成“Linux 内核课程的大纲”。先知道地图，后面再按需要深入某一块，而不是一上来就陷进某个函数名里。</div>
+    </section>
+
+    <section class="panel" id="map">
+      <h2>整体地图</h2>
+      <table>
+        <thead><tr><th>层次</th><th>它负责什么</th><th>代表模块</th><th>你现在怎么理解</th></tr></thead>
+        <tbody>
+          <tr><td>用户空间边界</td><td>程序如何向内核请求服务</td><td>系统调用、文件接口、socket、ioctl、procfs、sysfs</td><td>应用不是直接碰硬件，而是先通过这层边界把请求交给内核。</td></tr>
+          <tr><td>公共底座</td><td>所有模块都会依赖的通用能力</td><td>Core API、调度、内存、锁/RCU、中断、定时器</td><td>这是“地基层”。不理解这一层，后面看任何大模块都会感觉逻辑漂着。</td></tr>
+          <tr><td>系统能力层</td><td>对上给程序提供功能，对下组织资源</td><td>文件系统、块层、网络、设备模型</td><td>这是用户最常感受到的系统能力：读文件、发网络、访问设备都在这里成形。</td></tr>
+          <tr><td>硬件接入层</td><td>把具体硬件纳入系统统一管理</td><td>驱动、总线、ACPI、DeviceTree、外设子系统</td><td>这是“让硬件真正工作起来”的层，但它也要服从前面的公共规则。</td></tr>
+          <tr><td>扩展与治理</td><td>系统安全、观测、隔离与现代扩展能力</td><td>安全、虚拟化、容器、eBPF、跟踪与测试</td><td>这些建立在前面几层的基础之上，更像“把内核拿去支撑复杂世界”的能力。</td></tr>
+        </tbody>
+      </table>
+      <div class="note">最推荐的学习路径是：先学公共底座，再学系统能力，再理解边界和治理，最后再进入构建、安全、虚拟化、稳定性，以及更细的路径拆分专题。</div>
+    </section>
+
+    <section class="panel" id="topics">
+      <h2>专题入口</h2>
+      <div class="topic-grid">
+        <article class="card"><span class="tag tag-base">起点</span><h3>启动与初始化</h3><p>系统上电后，内核如何一步步把自己搭起来，并拉起各大子系统。</p><a class="btn" href="kernel-boot-init-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">底座</span><h3>Core API 与基础设施</h3><p>对象模型、引用计数、工作队列、通用容器等公共工具箱。</p><a class="btn" href="kernel-core-api-foundation-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">底座</span><h3>调度器</h3><p>进程和线程如何争用 CPU，系统怎么决定“谁先运行、谁先等待”。</p><a class="btn" href="kernel-scheduler-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">底座</span><h3>内存管理</h3><p>物理内存、虚拟内存、页缓存、回收、OOM 背后的总管家。</p><a class="btn" href="kernel-memory-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">底座</span><h3>并发控制</h3><p>锁、RCU、中断、定时器，解释为什么内核必须认真处理并发正确性。</p><a class="btn" href="kernel-concurrency-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">能力</span><h3>文件系统与存储栈</h3><p>VFS、具体文件系统、块层和磁盘 I/O 的分工与关系。</p><a class="btn" href="kernel-filesystem-storage-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">能力</span><h3>网络子系统</h3><p>从收包到协议处理，再到把数据交给应用的完整视角。</p><a class="btn" href="kernel-networking-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">能力</span><h3>设备模型与驱动框架</h3><p>设备、总线、驱动如何被统一组织，硬件如何成为系统能力的一部分。</p><a class="btn" href="kernel-driver-model-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">底座</span><h3>中断与定时器</h3><p>系统如何响应外部事件、如何按时间推进任务。</p><a class="btn" href="kernel-interrupt-timer-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">边界</span><h3>系统调用与用户空间边界</h3><p>应用如何正式向内核请求服务，为什么用户空间和内核空间之间必须有清晰边界。</p><a class="btn" href="kernel-syscall-user-boundary-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">治理</span><h3>cgroup、命名空间与容器</h3><p>容器背后依赖的是 Linux 提供的隔离与资源治理能力。</p><a class="btn" href="kernel-cgroup-container-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">观测</span><h3>跟踪、观测与 eBPF</h3><p>日志、tracepoint、perf、ftrace、eBPF 帮你看清系统运行时发生了什么。</p><a class="btn" href="kernel-tracing-ebpf-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">构建</span><h3>构建系统与模块加载</h3><p>内核如何被裁剪、编译和装配，以及哪些能力内建、哪些按需加载。</p><a class="btn" href="kernel-build-modules-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">安全</span><h3>安全模型与访问控制</h3><p>谁能做什么、哪些边界必须守住，这些规则如何嵌入内核本身。</p><a class="btn" href="kernel-security-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">虚拟化</span><h3>虚拟化与 KVM</h3><p>Linux 如何支撑虚拟机，为什么它和容器是不同的系统组织思路。</p><a class="btn" href="kernel-virtualization-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">质量</span><h3>测试、调试与稳定性</h3><p>为什么内核不是“能跑就行”，而必须在复杂环境下保持可信与稳定。</p><a class="btn" href="kernel-testing-debugging-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>进程、线程与任务模型</h3><p>把“进程/线程”从抽象词汇拆成内核真正关心的执行实体和共享关系。</p><a class="btn" href="kernel-process-thread-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>VFS 与文件对象模型</h3><p>更细地理解文件名、目录项、inode、打开文件实例为什么不是一回事。</p><a class="btn" href="kernel-vfs-file-object-model-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>块层与 I/O 路径</h3><p>把文件请求怎样变成真正设备请求的中间路径单独拆出来理解。</p><a class="btn" href="kernel-block-io-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>网络数据路径与 socket 视角</h3><p>把应用看到的 socket 和实际网络包长路径接到一起看。</p><a class="btn" href="kernel-network-data-path-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>页表与地址空间</h3><p>把虚拟地址、物理页和进程地址空间之间的映射关系单独拆开理解。</p><a class="btn" href="kernel-page-tables-address-space-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>页缓存、回收与内存压力</h3><p>把“缓存占用”和“内存紧张”放到同一张图里，理解卡顿与回收路径。</p><a class="btn" href="kernel-page-cache-reclaim-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>总线、设备发现与驱动匹配</h3><p>把设备如何被找到、登记并和正确驱动配对这条接入路径拆开看。</p><a class="btn" href="kernel-bus-matching-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>DMA 与内存映射</h3><p>理解设备地址视角、CPU 地址视角和高吞吐数据路径为什么不能混为一谈。</p><a class="btn" href="kernel-dma-memory-mapping-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>中断下半部、软中断与延后处理</h3><p>理解中断后续工作为什么常被分层延后，而不是都在最前线做完。</p><a class="btn" href="kernel-interrupt-bottom-half-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>workqueue 与异步执行</h3><p>把后台待办、进程上下文和系统异步执行能力单独拆开理解。</p><a class="btn" href="kernel-workqueue-async-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">细分</span><h3>模块加载与生命周期</h3><p>理解模块如何进入系统、持续存在，以及为什么退出往往更难。</p><a class="btn" href="kernel-module-lifecycle-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>等待队列、睡眠与唤醒</h3><p>把阻塞等待、任务睡眠和条件满足后的唤醒关系单独拆开理解。</p><a class="btn" href="kernel-waitqueue-sleep-wakeup-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>定时器、超时与延迟执行</h3><p>理解未来时刻触发、超时边界和延迟工作为什么是系统正式能力。</p><a class="btn" href="kernel-timer-timeout-delayed-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>probe、remove 与资源清理</h3><p>把驱动接管、失败回滚和退出清理这条生命周期路径单独拆开看。</p><a class="btn" href="kernel-probe-remove-resource-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>poll、epoll 与事件等待</h3><p>理解高并发服务为什么要把大量等待对象交给内核统一组织。</p><a class="btn" href="kernel-poll-epoll-event-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>kref 与引用计数</h3><p>把对象存活关系、异步持有和最终释放时机单独拆开理解。</p><a class="btn" href="kernel-kref-reference-count-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">细分</span><h3>电源管理与 suspend/resume</h3><p>理解设备如何安全睡下、恢复，以及为什么功耗管理也是生命周期问题。</p><a class="btn" href="kernel-power-management-suspend-resume-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>Device Tree、ACPI 与硬件描述</h3><p>理解驱动接手设备之前，系统怎样先知道硬件拓扑、资源和依赖。</p><a class="btn" href="kernel-devicetree-acpi-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>sysfs、procfs 与 debugfs</h3><p>把内核对象、系统状态和调试入口为什么常以文件树形式暴露拆开看。</p><a class="btn" href="kernel-sysfs-procfs-debugfs-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>ioctl、netlink 与控制通道</h3><p>理解复杂配置、管理和协商动作为什么需要专门边界接口。</p><a class="btn" href="kernel-ioctl-netlink-control-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>RCU 与读多写少同步</h3><p>理解为什么有些共享数据路径不想每次读都上重锁，而要把回收时机延后组织。</p><a class="btn" href="kernel-rcu-read-copy-update-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>slab、slub 与内核内存分配</h3><p>把高频小对象分配、缓存复用和分配上下文限制单独拆开看。</p><a class="btn" href="kernel-slab-slub-allocation-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>platform device、platform driver 与板级设备</h3><p>理解 SoC 和板级设备怎样被正式纳入驱动框架，而不是靠私有路径硬接。</p><a class="btn" href="kernel-platform-device-driver-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>kobject、sysfs 与 uevent</h3><p>理解内核对象为什么既能挂进 sysfs，又能在变化时把事件送到用户空间。</p><a class="btn" href="kernel-kobject-uevent-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>NUMA 与内存局部性</h3><p>把 CPU、内存节点和数据距离为什么会直接影响性能单独拆开看。</p><a class="btn" href="kernel-numa-locality-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>completion、semaphore 与协作等待</h3><p>理解“等某事完成”和“限制同时进入人数”为何不是普通互斥锁能自然表达的问题。</p><a class="btn" href="kernel-completion-semaphore-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>page fault 与缺页异常</h3><p>把访问地址为什么有时会变成“正常补页”、有时又会变成进程错误结果单独拆开看。</p><a class="btn" href="kernel-page-fault-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>signals 与进程通知</h3><p>理解进程为什么会被异步提醒、打断、暂停、继续或因异常收到正式通知。</p><a class="btn" href="kernel-signals-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>futex 与用户态同步</h3><p>理解用户态线程同步为什么会在无争用时留在用户态、在争用时再进入内核组织等待。</p><a class="btn" href="kernel-futex-user-space-sync-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>bio 与块 I/O 组织单元</h3><p>把上层块访问意图为什么要先组织成中间工作单元，再继续往设备方向推进单独拆开看。</p><a class="btn" href="kernel-bio-block-io-unit-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>blk-mq 与多队列块层</h3><p>理解现代块层为什么要重组并发队列模型，而不再让所有 I/O 都挤一个入口。</p><a class="btn" href="kernel-blk-mq-multi-queue-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-base">细分</span><h3>writeback 与脏页回写</h3><p>理解缓存里的修改怎样被系统按节奏推回存储，以及这为什么会直接影响卡顿体感。</p><a class="btn" href="kernel-writeback-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>cpu hotplug 与 CPU 上下线</h3><p>理解一颗 CPU 退出或重新进入在线集合时，系统为什么要先迁走任务、中断和定时角色。</p><a class="btn" href="kernel-cpu-hotplug-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">细分</span><h3>cpufreq 与动态频率调节</h3><p>理解 CPU 在线工作时为什么要持续平衡性能、功耗和温度，而不是永远固定一个频率。</p><a class="btn" href="kernel-cpufreq-cpu-frequency-scaling-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">细分</span><h3>cpuidle 与 CPU 空闲状态</h3><p>理解 CPU 暂时没活时为什么不是简单待机，而要选择合适的空闲深度来平衡省电和唤醒延迟。</p><a class="btn" href="kernel-cpuidle-cpu-idle-state-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>timer wheel 与定时器轮</h3><p>把大量普通超时任务为什么适合按时间分桶批量组织，而不是逐个用重型精细计时方式硬管拆开看。</p><a class="btn" href="kernel-timer-wheel-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>hrtimer 与高精度定时</h3><p>理解某些时间需求为什么更在乎触发精度和确定性，而不能只满足“大概到点”。</p><a class="btn" href="kernel-hrtimer-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>notifier chains 与事件广播</h3><p>把内核内部一个事件发生后怎样按注册关系通知多个模块这条广播路径单独拆开看。</p><a class="btn" href="kernel-notifier-chain-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>preemption 与内核抢占</h3><p>理解当前执行为什么不一定能一直跑下去，以及系统在什么边界上允许把 CPU 切给别的执行。</p><a class="btn" href="kernel-preemption-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>per-CPU variables 与本地数据</h3><p>把高频状态为什么常按 CPU 各自保存一份，以减少全局争用和缓存抖动拆开看。</p><a class="btn" href="kernel-percpu-variables-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>kthread 与内核线程</h3><p>理解内核为什么需要自己长期存在的后台执行者，而不是把所有工作都塞进一次性回调。</p><a class="btn" href="kernel-kthread-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>spinlock 与自旋锁</h3><p>把不能睡眠的短临界区为什么常用忙等方式保护，而不是把等待者全挂起拆开看。</p><a class="btn" href="kernel-spinlock-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>mutex 与互斥锁</h3><p>理解较长共享路径为什么更适合让等待者睡下，由调度器正式组织互斥等待。</p><a class="btn" href="kernel-mutex-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>rwsem 与读写信号量</h3><p>把读多写少对象为什么常允许多个读者并行、但仍要求写者独占修改窗口拆开看。</p><a class="btn" href="kernel-rwsem-reader-writer-semaphore-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>atomic operations 与原子操作</h3><p>理解某个最小共享状态更新为什么必须整体发生，而不能让别人看见中间态。</p><a class="btn" href="kernel-atomic-operations-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>memory barriers 与内存屏障</h3><p>把并发世界里“操作做了”和“别人按什么顺序看见了”为什么不是同一回事拆开看。</p><a class="btn" href="kernel-memory-barriers-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>seqcount / seqlock 与顺序计数同步</h3><p>理解读者先快读、撞上写者就认错重来，这种轻量快照同步为什么适合读多写少场景。</p><a class="btn" href="kernel-seqcount-seqlock-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>cmpxchg 与 CAS 循环</h3><p>把“只有旧值还没变时才允许替换新值”这种条件式原子更新，以及失败后重试的写法拆开看。</p><a class="btn" href="kernel-cmpxchg-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>refcount_t 与安全引用计数</h3><p>理解对象持有关系为什么不是普通计数问题，而是和 UAF 边界紧密相关的安全协议。</p><a class="btn" href="kernel-refcount-t-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-adv">细分</span><h3>lockdep 与锁依赖检查</h3><p>把锁顺序、上下文合法性和潜在死锁为什么能在运行时被提前发现拆开看。</p><a class="btn" href="kernel-lockdep-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>list_head / hlist 与内核链表</h3><p>理解对象为什么常直接带着挂链节点，以便被组织进队列、桶和各种运行时关系里。</p><a class="btn" href="kernel-list-hlist-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>rbtree 与红黑树</h3><p>把对象如何按地址、时间或编号这类键有序组织起来，以支持稳定查找和邻近关系拆开看。</p><a class="btn" href="kernel-rbtree-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>xarray 与稀疏索引</h3><p>理解大而稀疏的整数索引空间为什么需要专门结构来组织对象，而不是硬开巨大数组。</p><a class="btn" href="kernel-xarray-sparse-index-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>buddy allocator 与伙伴系统分配</h3><p>把底层物理页块怎样按阶数拆分、合并和供应给上层分配路径单独拆开看。</p><a class="btn" href="kernel-buddy-allocator-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>vmalloc 与内核虚拟连续映射</h3><p>理解为什么有些需求只在乎虚拟地址连续，而不必硬拿物理连续页块。</p><a class="btn" href="kernel-vmalloc-cn.html">进入专题</a></article>
+        <article class="card"><span class="tag tag-core">细分</span><h3>CMA 与连续内存分配</h3><p>把设备侧连续物理内存需求为什么要提前规划和保路单独拆开看。</p><a class="btn" href="kernel-cma-contiguous-memory-cn.html">进入专题</a></article>
+      </div>
+    </section>
+
+    <section class="panel" id="wave1">
+      <h2>第一批：先打地基</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>首页</h3><ul><li>目标：先看见整个地图</li><li>重点：公共底座和系统能力层的区别</li><li>读完后应能说清：内核大块分工是什么</li></ul></div>
+        <div class="card"><h3>启动与初始化</h3><ul><li>目标：理解系统不是一下子就完整</li><li>重点：早期内存、初始化顺序、进入用户空间</li><li>读完后应能说清：为什么很多模块必须按顺序被拉起</li></ul><a class="btn" href="kernel-boot-init-cn.html">去看这一页</a></div>
+        <div class="card"><h3>Core API 与基础设施</h3><ul><li>目标：认识内核里的公共工具箱</li><li>重点：对象生命周期、workqueue、通用容器</li><li>读完后应能说清：为什么很多模块会共享同一套基础设施</li></ul><a class="btn" href="kernel-core-api-foundation-cn.html">去看这一页</a></div>
+        <div class="card"><h3>调度器</h3><ul><li>目标：理解“谁现在运行”这个问题</li><li>重点：任务、优先级、上下文切换、多核负载均衡</li><li>读完后应能说清：CPU 时间为什么是一种必须被管理的资源</li></ul><a class="btn" href="kernel-scheduler-cn.html">去看这一页</a></div>
+        <div class="card"><h3>内存管理</h3><ul><li>目标：知道内存不只是变量存放地</li><li>重点：页、虚拟内存、页缓存、回收、OOM</li><li>读完后应能说清：为什么文件系统、性能、卡顿现象都常和内存有关</li></ul><a class="btn" href="kernel-memory-cn.html">去看这一页</a></div>
+      </div>
+    </section>
+
+    <section class="panel" id="wave2">
+      <h2>第二批：理解系统能力怎么落地</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>并发控制</h3><ul><li>目标：理解为什么内核要严肃处理同时访问</li><li>重点：锁、RCU、上下文限制、竞争与性能</li><li>读完后应能说清：并发问题为什么既关正确性也关性能</li></ul><a class="btn" href="kernel-concurrency-cn.html">去看这一页</a></div>
+        <div class="card"><h3>文件系统与存储栈</h3><ul><li>目标：区分文件语义层和块 I/O 层</li><li>重点：VFS、inode、dentry、页缓存、块层</li><li>读完后应能说清：为什么读文件不是直接“读磁盘”</li></ul><a class="btn" href="kernel-filesystem-storage-cn.html">去看这一页</a></div>
+        <div class="card"><h3>网络子系统</h3><ul><li>目标：把网络看成完整数据路径</li><li>重点：socket、协议栈、sk_buff、网卡驱动</li><li>读完后应能说清：为什么网络问题会跨多个底座模块</li></ul><a class="btn" href="kernel-networking-cn.html">去看这一页</a></div>
+        <div class="card"><h3>设备模型与驱动框架</h3><ul><li>目标：理解硬件是怎样被系统统一接住的</li><li>重点：设备、总线、驱动、probe/remove、sysfs</li><li>读完后应能说清：驱动为什么不是孤立代码</li></ul><a class="btn" href="kernel-driver-model-cn.html">去看这一页</a></div>
+      </div>
+    </section>
+
+    <section class="panel" id="wave3">
+      <h2>第三批：边界、治理与观测</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>中断与定时器</h3><ul><li>目标：理解系统如何响应外部事件和时间推进</li><li>重点：中断、下半部、定时器、时间行为</li><li>读完后应能说清：为什么很多事情不能直接在中断里做完</li></ul><a class="btn" href="kernel-interrupt-timer-cn.html">去看这一页</a></div>
+        <div class="card"><h3>系统调用与用户空间边界</h3><ul><li>目标：理解应用如何正式进入内核服务世界</li><li>重点：系统调用、用户空间、内核空间、边界检查</li><li>读完后应能说清：为什么边界本身就是系统设计重点</li></ul><a class="btn" href="kernel-syscall-user-boundary-cn.html">去看这一页</a></div>
+        <div class="card"><h3>cgroup、命名空间与容器</h3><ul><li>目标：把容器拆回 Linux 内核原生能力来理解</li><li>重点：隔离、资源控制、共享内核、治理</li><li>读完后应能说清：命名空间和 cgroup 各自解决什么问题</li></ul><a class="btn" href="kernel-cgroup-container-cn.html">去看这一页</a></div>
+        <div class="card"><h3>跟踪、观测与 eBPF</h3><ul><li>目标：理解系统问题为什么不能只靠猜</li><li>重点：日志、tracepoint、perf、ftrace、eBPF</li><li>读完后应能说清：为什么观测能力本身就是现代 Linux 的重要部分</li></ul><a class="btn" href="kernel-tracing-ebpf-cn.html">去看这一页</a></div>
+      </div>
+    </section>
+
+    <section class="panel" id="wave4">
+      <h2>第四批：系统工程化视角</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>构建系统与模块加载</h3><ul><li>目标：理解内核如何被配置、裁剪和装配</li><li>重点：Kconfig、Kbuild、内建能力、模块化能力</li><li>读完后应能说清：为什么“怎么编出来”会影响你理解系统</li></ul><a class="btn" href="kernel-build-modules-cn.html">去看这一页</a></div>
+        <div class="card"><h3>安全模型与访问控制</h3><ul><li>目标：理解系统如何判断谁能做什么</li><li>重点：权限边界、能力拆分、资源访问控制</li><li>读完后应能说清：为什么安全不是附加层而是内核规则本身</li></ul><a class="btn" href="kernel-security-cn.html">去看这一页</a></div>
+        <div class="card"><h3>虚拟化与 KVM</h3><ul><li>目标：区分容器和虚拟机两种系统组织思路</li><li>重点：guest、host、vCPU、独立内核视角</li><li>读完后应能说清：为什么 Linux 不只是跑应用，还能承载别的系统</li></ul><a class="btn" href="kernel-virtualization-cn.html">去看这一页</a></div>
+        <div class="card"><h3>测试、调试与稳定性</h3><ul><li>目标：理解为什么内核必须在复杂环境下保持可信</li><li>重点：回归、调试信息、测试覆盖、长期稳定性</li><li>读完后应能说清：为什么观测、调试和测试应放在一起看</li></ul><a class="btn" href="kernel-testing-debugging-cn.html">去看这一页</a></div>
+      </div>
+      <div class="note">第四批会让你明显感觉到：Linux 内核不只是“很多模块的集合”，它还是一个被持续构建、治理、保护、验证和运行的平台。</div>
+    </section>
+
+    <section class="panel" id="wave5">
+      <h2>第五批：把宽主题拆成细路径</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>进程、线程与任务模型</h3><ul><li>目标：把“进程/线程”拆成内核真正管理的执行实体关系</li><li>重点：任务、资源共享、生命周期、状态</li><li>读完后应能说清：调度器真正调度的到底是什么</li></ul><a class="btn" href="kernel-process-thread-cn.html">去看这一页</a></div>
+        <div class="card"><h3>VFS 与文件对象模型</h3><ul><li>目标：把统一文件语义进一步拆开理解</li><li>重点：dentry、inode、file、挂载点</li><li>读完后应能说清：为什么“文件名”和“文件对象”不是一回事</li></ul><a class="btn" href="kernel-vfs-file-object-model-cn.html">去看这一页</a></div>
+        <div class="card"><h3>块层与 I/O 路径</h3><ul><li>目标：理解文件请求怎样被组织成真正设备 I/O</li><li>重点：块设备、请求队列、写回、完成路径</li><li>读完后应能说清：为什么上层读写请求不会直接原样砸到设备上</li></ul><a class="btn" href="kernel-block-io-cn.html">去看这一页</a></div>
+        <div class="card"><h3>网络数据路径与 socket 视角</h3><ul><li>目标：把应用入口和包路径接起来看</li><li>重点：socket、sk_buff、队列、协议与驱动交接</li><li>读完后应能说清：为什么网络问题常常是整条路径的问题</li></ul><a class="btn" href="kernel-network-data-path-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第五批不再只是讲“模块是什么”，而是把你前面已经见过的宽主题进一步拆成更小、更容易建立手感的运行路径和对象模型。</div>
+    </section>
+
+    <section class="panel" id="wave6">
+      <h2>第六批：继续把内存与驱动拆细</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>页表与地址空间</h3><ul><li>目标：把“程序看到的地址”与“机器真实内存”分开理解</li><li>重点：地址空间、页表、缺页、映射关系</li><li>读完后应能说清：为什么指针地址不等于物理地址</li></ul><a class="btn" href="kernel-page-tables-address-space-cn.html">去看这一页</a></div>
+        <div class="card"><h3>页缓存、回收与内存压力</h3><ul><li>目标：理解 Linux 为什么宁可少空闲，也要多利用内存做缓存</li><li>重点：页缓存、写回、回收、交换、压力</li><li>读完后应能说清：为什么很多卡顿本质上是回收路径在作怪</li></ul><a class="btn" href="kernel-page-cache-reclaim-cn.html">去看这一页</a></div>
+        <div class="card"><h3>总线、设备发现与驱动匹配</h3><ul><li>目标：理解设备不是“驱动写好就能直接接管”</li><li>重点：发现、登记、匹配、probe、总线世界观</li><li>读完后应能说清：为什么设备接入是一个被组织的过程</li></ul><a class="btn" href="kernel-bus-matching-cn.html">去看这一页</a></div>
+        <div class="card"><h3>DMA 与内存映射</h3><ul><li>目标：理解设备和 CPU 为什么不一定看到同一套地址世界</li><li>重点：缓冲区、映射、设备可见地址、一致性</li><li>读完后应能说清：为什么 DMA 不只是“更快搬数据”</li></ul><a class="btn" href="kernel-dma-memory-mapping-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第六批开始把“宽主题里的关键难点”继续拆开：内存不再只讲总览，而是细到地址映射和回收压力；驱动也不再只讲框架，而是细到设备怎么被发现、怎么拿到可用的数据路径。</div>
+    </section>
+
+    <section class="panel" id="wave7">
+      <h2>第七批：把事件、异步和模块生命过程拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>中断下半部、软中断与延后处理</h3><ul><li>目标：理解为什么内核要把中断响应和后续重活拆开</li><li>重点：上半部、下半部、软中断、延后处理</li><li>读完后应能说清：为什么“先确认事件，再安排后续”是常态</li></ul><a class="btn" href="kernel-interrupt-bottom-half-cn.html">去看这一页</a></div>
+        <div class="card"><h3>workqueue 与异步执行</h3><ul><li>目标：理解后台待办为什么是内核组织能力，而不只是技巧</li><li>重点：异步执行、进程上下文、延迟工作、后台处理</li><li>读完后应能说清：为什么很多事情不是不能做，而是不适合现在做</li></ul><a class="btn" href="kernel-workqueue-async-cn.html">去看这一页</a></div>
+        <div class="card"><h3>模块加载与生命周期</h3><ul><li>目标：理解模块不是“装上就完事”，而是有完整生命过程</li><li>重点：加载、初始化、依赖、存在、退出</li><li>读完后应能说清：为什么模块退出常比进入更难</li></ul><a class="btn" href="kernel-module-lifecycle-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第七批开始补“系统怎么持续运转”这层感觉：事件不是都在最前线处理完，后台工作不是凭空出现，模块也不是一段静态代码，而是会进入系统关系网的运行期部件。</div>
+    </section>
+
+    <section class="panel" id="wave8">
+      <h2>第八批：把等待、时间边界和驱动撤场拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>等待队列、睡眠与唤醒</h3><ul><li>目标：理解任务为什么常常是“先睡下，等条件成立再继续”</li><li>重点：等待队列、阻塞、睡眠、唤醒、条件变化</li><li>读完后应能说清：为什么很多卡住问题本质上是等待与唤醒没接好</li></ul><a class="btn" href="kernel-waitqueue-sleep-wakeup-cn.html">去看这一页</a></div>
+        <div class="card"><h3>定时器、超时与延迟执行</h3><ul><li>目标：理解“以后再做”和“最多等多久”为什么都要被正式组织</li><li>重点：定时器、超时、延迟执行、delayed work、重试退避</li><li>读完后应能说清：为什么超时路径往往和主路径同样重要</li></ul><a class="btn" href="kernel-timer-timeout-delayed-cn.html">去看这一页</a></div>
+        <div class="card"><h3>probe、remove 与资源清理</h3><ul><li>目标：理解驱动不是只要接管成功，还要能干净撤场</li><li>重点：probe、remove、回滚、资源清理、异步退出</li><li>读完后应能说清：为什么 remove 经常比 probe 更难</li></ul><a class="btn" href="kernel-probe-remove-resource-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第八批开始把“系统为什么不会一直硬顶着往前跑”这层感觉拆细：做不了就睡、等太久要超时、接手成功之后还得能撤场干净，这些都属于内核成熟度的一部分。</div>
+    </section>
+
+    <section class="panel" id="wave9">
+      <h2>第九批：把事件模型、对象存活和设备睡醒拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>poll、epoll 与事件等待</h3><ul><li>目标：理解为什么大量等待对象不能靠挨个试或一连接一线程硬撑</li><li>重点：事件就绪、文件描述符、事件循环、等待模型</li><li>读完后应能说清：为什么高并发等待本质上是在组织大量阻塞关系</li></ul><a class="btn" href="kernel-poll-epoll-event-cn.html">去看这一页</a></div>
+        <div class="card"><h3>kref 与引用计数</h3><ul><li>目标：理解对象为什么不能凭感觉释放，而要看还有谁在持有</li><li>重点：引用计数、kref、获取引用、放下引用、最终释放</li><li>读完后应能说清：为什么对象活着和对象可并发修改不是一回事</li></ul><a class="btn" href="kernel-kref-reference-count-cn.html">去看这一页</a></div>
+        <div class="card"><h3>电源管理与 suspend/resume</h3><ul><li>目标：理解设备生命周期不只包含启动和退出，还包含睡眠与恢复</li><li>重点：runtime PM、suspend、resume、依赖顺序、状态恢复</li><li>读完后应能说清：为什么恢复正确性常比进入低功耗更难</li></ul><a class="btn" href="kernel-power-management-suspend-resume-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第九批开始补“系统长期运行时怎么把很多关系维持住”这层感觉：等待对象越来越多、对象会被很多路径共同持有、设备还会反复睡下再醒来，内核必须把这些长期关系组织得很稳。</div>
+    </section>
+
+    <section class="panel" id="wave10">
+      <h2>第十批：把硬件描述、可见界面和控制通道拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>Device Tree、ACPI 与硬件描述</h3><ul><li>目标：理解驱动接手之前，系统怎样先知道硬件是什么、资源在哪</li><li>重点：Device Tree、ACPI、兼容信息、资源描述、固件接口</li><li>读完后应能说清：为什么很多驱动问题其实起源于平台描述没有接对</li></ul><a class="btn" href="kernel-devicetree-acpi-cn.html">去看这一页</a></div>
+        <div class="card"><h3>sysfs、procfs 与 debugfs</h3><ul><li>目标：理解内核为什么喜欢把对象、状态和调试入口做成文件树</li><li>重点：sysfs、procfs、debugfs、伪文件系统、属性暴露</li><li>读完后应能说清：为什么它们看起来相似，却分别承担对象视图、系统视图和调试视图</li></ul><a class="btn" href="kernel-sysfs-procfs-debugfs-cn.html">去看这一页</a></div>
+        <div class="card"><h3>ioctl、netlink 与控制通道</h3><ul><li>目标：理解复杂配置和管理动作为什么不能都硬塞进普通读写接口</li><li>重点：ioctl、netlink、结构化消息、控制面、管理入口</li><li>读完后应能说清：为什么 Linux 会把数据面和控制面分开组织</li></ul><a class="btn" href="kernel-ioctl-netlink-control-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十批开始补“系统怎样把自己描述出来、展示出来、再被用户空间正式管理”这层感觉：硬件先被固件和平台信息说清楚，内核再把对象和状态暴露出来，复杂管理动作则走专门控制通道。</div>
+    </section>
+
+    <section class="panel" id="wave11">
+      <h2>第十一批：把同步规则、对象分配和板级接法拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>RCU 与读多写少同步</h3><ul><li>目标：理解为什么高并发读路径不总想靠每次读都上重锁</li><li>重点：RCU、读侧临界区、宽限期、发布替换、延后回收</li><li>读完后应能说清：为什么“旧对象不能死太早”是这类同步的核心</li></ul><a class="btn" href="kernel-rcu-read-copy-update-cn.html">去看这一页</a></div>
+        <div class="card"><h3>slab、slub 与内核内存分配</h3><ul><li>目标：理解内核高频创建销毁对象时，为什么不想每次都直接走最底层页分配</li><li>重点：kmalloc、kfree、对象缓存、分配上下文、碎片与复用</li><li>读完后应能说清：为什么“现在在哪种上下文里要内存”本身就是系统问题</li></ul><a class="btn" href="kernel-slab-slub-allocation-cn.html">去看这一页</a></div>
+        <div class="card"><h3>platform device、platform driver 与板级设备</h3><ul><li>目标：理解 SoC 和板级设备怎样被正式放进驱动模型，而不是靠私有代码直连</li><li>重点：platform device、platform driver、板级资源、probe、平台总线视角</li><li>读完后应能说清：为什么固定焊在板上的设备也一样需要对象模型和生命周期</li></ul><a class="btn" href="kernel-platform-device-driver-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十一批开始补“系统怎么把高并发共享规则、对象出生死亡和 SoC 板级设备接法真正落地”这层感觉：共享数据不一定靠粗锁硬控，小对象不一定每次现切内存，板上固定设备也一样要被正式纳入驱动框架。</div>
+    </section>
+
+    <section class="panel" id="wave12">
+      <h2>第十二批：把对象骨架、局部性和协作等待拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>kobject、sysfs 与 uevent</h3><ul><li>目标：理解对象为什么不仅要活着，还要能被挂进层级、暴露属性并对外发事件</li><li>重点：kobject、sysfs、uevent、对象层级、热插拔通知</li><li>读完后应能说清：为什么很多设备对象既会出现在 sysfs，又会触发用户空间反应</li></ul><a class="btn" href="kernel-kobject-uevent-cn.html">去看这一页</a></div>
+        <div class="card"><h3>NUMA 与内存局部性</h3><ul><li>目标：理解大机器上“资源够不够”和“资源离得近不近”为什么是两回事</li><li>重点：NUMA、节点、远端访问、拓扑感知、局部性</li><li>读完后应能说清：为什么调度和内存分配都得带着拓扑意识工作</li></ul><a class="btn" href="kernel-numa-locality-cn.html">去看这一页</a></div>
+        <div class="card"><h3>completion、semaphore 与协作等待</h3><ul><li>目标：理解很多同步关系的关键不是互斥，而是等某件事完成或限制并发人数</li><li>重点：completion、semaphore、完成通知、配额控制、协作等待</li><li>读完后应能说清：为什么并发协作常比“抢锁”更接近真实系统关系</li></ul><a class="btn" href="kernel-completion-semaphore-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十二批开始补“系统如何把对象公开成可见实体、把大机器资源放在合适位置、再让多条路径按语义协作”这层感觉：对象不只要存在，还要能被看见；资源不只要有，还要离得近；同步不只要互斥，还要表达完成与配额。</div>
+    </section>
+
+    <section class="panel" id="wave13">
+      <h2>第十三批：把缺页、进程通知和用户态同步拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>page fault 与缺页异常</h3><ul><li>目标：理解地址访问失败为什么很多时候不是错误，而是虚拟内存开始正式兑现的一步</li><li>重点：缺页异常、按需分页、写时复制、权限错误、文件页装入</li><li>读完后应能说清：为什么一次普通内存访问会牵出页表、I/O、调度和进程结果</li></ul><a class="btn" href="kernel-page-fault-cn.html">去看这一页</a></div>
+        <div class="card"><h3>signals 与进程通知</h3><ul><li>目标：理解进程为什么会在运行中被异步打断、提醒、暂停或终止</li><li>重点：signal、递送、屏蔽、默认动作、异常结果、进程控制</li><li>读完后应能说清：为什么很多系统事件不是返回值，而是以通知方式进入进程</li></ul><a class="btn" href="kernel-signals-cn.html">去看这一页</a></div>
+        <div class="card"><h3>futex 与用户态同步</h3><ul><li>目标：理解用户态线程同步为什么不想每次都陷入内核，但争用时又必须让内核接手等待关系</li><li>重点：快路径、慢路径、原子操作、睡眠唤醒、丢唤醒、信号中断</li><li>读完后应能说清：为什么“平时轻、竞争时正式睡下”是很多高性能线程同步的核心思路</li></ul><a class="btn" href="kernel-futex-user-space-sync-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十三批开始补“执行路径为什么会突然拐弯”这层感觉：内存访问不一定立刻成功，进程不一定按主线剧情一直跑，线程之间的等待也不一定每次都该直接找内核。很多运行时行为，正是在这些拐弯点上被正式组织起来。</div>
+    </section>
+
+    <section class="panel" id="wave14">
+      <h2>第十四批：把块 I/O 中间对象、并发队列和回写节奏拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>bio 与块 I/O 组织单元</h3><ul><li>目标：理解上层读写意图为什么不会直接变成设备命令，而要先装进正式中间对象</li><li>重点：bio、页到块的对应、中间层对象、拆分合并、I/O 方向</li><li>读完后应能说清：为什么 bio 更像“把块 I/O 任务说清楚”，而不是最终下发命令</li></ul><a class="btn" href="kernel-bio-block-io-unit-cn.html">去看这一页</a></div>
+        <div class="card"><h3>blk-mq 与多队列块层</h3><ul><li>目标：理解现代块层为什么必须认真处理多核和高并发设备下的队列争用问题</li><li>重点：blk-mq、软件队列、硬件队列、锁竞争、完成路径、并发匹配</li><li>读完后应能说清：为什么块 I/O 性能瓶颈可能先出现在软件队列组织上</li></ul><a class="btn" href="kernel-blk-mq-multi-queue-cn.html">去看这一页</a></div>
+        <div class="card"><h3>writeback 与脏页回写</h3><ul><li>目标：理解文件写入为什么常常先快后慢，以及缓存里的修改怎样被系统真正推回存储</li><li>重点：脏页、writeback、后台回写、回写压力、持久化差距</li><li>读完后应能说清：为什么写入卡顿和 I/O 抖动常常是回写节奏问题</li></ul><a class="btn" href="kernel-writeback-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十四批开始补“写入路径怎么真正压到存储上”这层感觉：上层意图要先被装成可流转的块 I/O 对象，请求下发要适应现代并发设备，而缓存里先记下来的修改也总要在某个时机正式结账。很多存储体感上的抖动，正是从这三层接缝里冒出来的。</div>
+    </section>
+
+    <section class="panel" id="wave15">
+      <h2>第十五批：把 CPU 在线集合、忙时调速和闲时睡眠拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>cpu hotplug 与 CPU 上下线</h3><ul><li>目标：理解 CPU 为什么不是永远全部在线，以及下线前为什么必须把系统职责迁干净</li><li>重点：online/offline CPU、任务迁移、中断重定向、CPU 生命周期、动态拓扑</li><li>读完后应能说清：为什么 CPU 下线更像一次系统重组动作，而不是单纯关核</li></ul><a class="btn" href="kernel-cpu-hotplug-cn.html">去看这一页</a></div>
+        <div class="card"><h3>cpufreq 与动态频率调节</h3><ul><li>目标：理解 CPU 在线工作时为什么要持续平衡性能、功耗和温度，而不是固定在一个主频上</li><li>重点：cpufreq、governor、性能/功耗权衡、平台约束、响应性</li><li>读完后应能说清：为什么“现在跑多快”本身就是系统治理的重要问题</li></ul><a class="btn" href="kernel-cpufreq-cpu-frequency-scaling-cn.html">去看这一页</a></div>
+        <div class="card"><h3>cpuidle 与 CPU 空闲状态</h3><ul><li>目标：理解 CPU 没活干时为什么不能只傻等，而要在不同空闲深度之间权衡省电和唤醒延迟</li><li>重点：cpuidle、浅空闲/深空闲、唤醒延迟、空闲预测、响应体感</li><li>读完后应能说清：为什么“闲时怎么睡”与“忙时怎么跑”是两套不同但互补的策略</li></ul><a class="btn" href="kernel-cpuidle-cpu-idle-state-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十五批开始补“CPU 资源怎么在运行时被动态编排”这层感觉：有时一颗核甚至会暂时退出系统在线集合，有时在线的核要根据负载调快调慢，而真正空闲时又要认真挑选睡眠深度。CPU 不是静态算力砖块，而是一直被内核调度、能耗和响应目标共同塑形的资源。</div>
+    </section>
+
+    <section class="panel" id="wave16">
+      <h2>第十六批：把普通定时组织、高精度触发和事件广播拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>timer wheel 与定时器轮</h3><ul><li>目标：理解大量普通定时任务为什么更适合按时间粒度分桶推进，而不是每个都单独精细管理</li><li>重点：timer wheel、桶位、时间推进、普通定时器、规模化超时管理</li><li>读完后应能说清：为什么 timer wheel 真正解决的是系统级大量定时事件的组织问题</li></ul><a class="btn" href="kernel-timer-wheel-cn.html">去看这一页</a></div>
+        <div class="card"><h3>hrtimer 与高精度定时</h3><ul><li>目标：理解某些时间需求为什么不仅要“会触发”，还要尽量在预期时刻附近稳定触发</li><li>重点：hrtimer、高精度定时、抖动、时间确定性、精度成本</li><li>读完后应能说清：为什么高精度定时不是普通定时器的低成本升级版</li></ul><a class="btn" href="kernel-hrtimer-cn.html">去看这一页</a></div>
+        <div class="card"><h3>notifier chains 与事件广播</h3><ul><li>目标：理解一个内核事件发生后，为什么常要按注册关系把影响广播给多个模块，而不是把后续逻辑都写死在发起点</li><li>重点：notifier chain、注册/注销、广播事件、观察者模式、回调上下文</li><li>读完后应能说清：为什么通知链的价值在于跨模块解耦，而不只是“方便写回调”</li></ul><a class="btn" href="kernel-notifier-chain-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十六批开始补“时间和事件怎样被系统正式组织起来”这层感觉：普通超时任务讲究规模化和低成本，高精度定时讲究触发时刻本身，而一个状态变化真正传播出去时，又常常依赖正式的广播链把多个响应者串起来。</div>
+    </section>
+
+    <section class="panel" id="wave17">
+      <h2>第十七批：把执行可抢占性、CPU 本地状态和内核后台线程拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>preemption 与内核抢占</h3><ul><li>目标：理解当前执行为什么不一定能一直跑到自己愿意停下，以及系统何时允许把 CPU 切走</li><li>重点：preemption、可抢占点、关闭抢占、调度延迟、执行上下文</li><li>读完后应能说清：为什么“最终会调度”并不等于“现在就能切换”</li></ul><a class="btn" href="kernel-preemption-cn.html">去看这一页</a></div>
+        <div class="card"><h3>per-CPU variables 与本地数据</h3><ul><li>目标：理解哪些状态更适合按 CPU 分开保存，以减少高频路径上的全局争用</li><li>重点：per-CPU variable、本地更新、汇总、CPU 局部性、迁移约束</li><li>读完后应能说清：为什么很多高频状态设计首先是在缩小共享范围</li></ul><a class="btn" href="kernel-percpu-variables-cn.html">去看这一页</a></div>
+        <div class="card"><h3>kthread 与内核线程</h3><ul><li>目标：理解内核为什么要自己长期持有后台执行实体，而不是把所有工作都塞进一次性异步回调</li><li>重点：kthread、服务循环、唤醒休眠、停止语义、绑定与非绑定</li><li>读完后应能说清：为什么 kthread 的核心问题往往是生命周期和控制节奏</li></ul><a class="btn" href="kernel-kthread-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十七批开始补“执行到底怎样稳定地跑在系统里”这层感觉：有些路径会在合适边界被抢占切走，有些高频状态会故意留在本 CPU 减少共享，而内核自己也要养一批长期存在的后台线程，把持续性的内部工作接住。</div>
+    </section>
+
+    <section class="panel" id="wave18">
+      <h2>第十八批：把忙等互斥、睡眠互斥和读写不对称同步拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>spinlock 与自旋锁</h3><ul><li>目标：理解不能睡眠的短临界区为什么常要用忙等方式快速保护，而不是让等待者阻塞睡下</li><li>重点：spinlock、忙等、短临界区、原子上下文、本地中断约束</li><li>读完后应能说清：为什么自旋锁真正适配的是“不能睡且很短”的共享路径</li></ul><a class="btn" href="kernel-spinlock-cn.html">去看这一页</a></div>
+        <div class="card"><h3>mutex 与互斥锁</h3><ul><li>目标：理解较长共享路径为什么更适合让等待者睡下，再由调度器重新安排继续执行</li><li>重点：mutex、阻塞等待、可睡眠上下文、唤醒、较长临界区</li><li>读完后应能说清：为什么 mutex 的核心价值在于等待语义，而不只是互斥本身</li></ul><a class="btn" href="kernel-mutex-cn.html">去看这一页</a></div>
+        <div class="card"><h3>rwsem 与读写信号量</h3><ul><li>目标：理解读多写少对象为什么常允许多个读者并行，但对修改者仍然保留独占窗口</li><li>重点：rwsem、读锁、写锁、读多写少、公平性与饥饿</li><li>读完后应能说清：为什么 rwsem 真正利用的是读写访问模式不对称</li></ul><a class="btn" href="kernel-rwsem-reader-writer-semaphore-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十八批开始补“同步原语为什么要按等待方式和访问形态来分家”这层感觉：有的路径短到只能忙等，有的等待更适合睡下，而有的共享对象则天然存在读多写少的结构差异。锁不是一个词，而是一整套和上下文强绑定的选择题。</div>
+    </section>
+
+    <section class="panel" id="wave19">
+      <h2>第十九批：把最小原子动作、观察顺序和快照重试同步拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>atomic operations 与原子操作</h3><ul><li>目标：理解某个最小共享状态更新为什么必须整体发生，而不能让别人看见一半改完的中间态</li><li>重点：atomic operation、读改写、计数与标志、不可分割、基础积木</li><li>读完后应能说清：为什么原子操作真正保护的是最小状态跳变，而不是整段复杂逻辑</li></ul><a class="btn" href="kernel-atomic-operations-cn.html">去看这一页</a></div>
+        <div class="card"><h3>memory barriers 与内存屏障</h3><ul><li>目标：理解并发世界里“操作做了”和“别人按什么顺序看见了”为什么不是同一回事</li><li>重点：memory barrier、可见性、发布/获取、顺序约束、观察者视角</li><li>读完后应能说清：为什么很多并发 bug 出在观察顺序，而不是单条语句没执行</li></ul><a class="btn" href="kernel-memory-barriers-cn.html">去看这一页</a></div>
+        <div class="card"><h3>seqcount / seqlock 与顺序计数同步</h3><ul><li>目标：理解读者先快速读取、若撞上写入就认错重来，这种快照式同步为什么适合读多写少场景</li><li>重点：seqcount、seqlock、重试、稳定快照、写少读多</li><li>读完后应能说清：为什么这类机制优化的不是“每次都成功”，而是“平时很轻、冲突时能重来”</li></ul><a class="btn" href="kernel-seqcount-seqlock-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第十九批开始补“更底层的并发正确性到底靠什么成立”这层感觉：有时难点只是一个最小更新不能裂开，有时难点是别人看到事情的顺序不能乱，而有时又要让读者尽量轻快地拿快照、在冲突时再重试。并发不只有锁，还有更细的语义地基。</div>
+    </section>
+
+    <section class="panel" id="wave20">
+      <h2>第二十批：把条件替换、引用安全和锁依赖探测拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>cmpxchg 与 CAS 循环</h3><ul><li>目标：理解只有旧值还保持预期时才允许替换新值，这种条件式原子更新为什么常被写成失败重试循环</li><li>重点：cmpxchg、CAS 循环、条件式更新、竞争失败、状态门闩</li><li>读完后应能说清：为什么 cmpxchg 常在状态切换入口扮演“只让一个人推进”的门闩</li></ul><a class="btn" href="kernel-cmpxchg-cn.html">去看这一页</a></div>
+        <div class="card"><h3>refcount_t 与安全引用计数</h3><ul><li>目标：理解对象持有关系为什么不是普通原子计数问题，而是接近释放边界时尤为敏感的安全协议</li><li>重点：refcount_t、获取引用、放下引用、生命周期边界、UAF 风险</li><li>读完后应能说清：为什么“还能不能再加引用”往往比数字本身更关键</li></ul><a class="btn" href="kernel-refcount-t-cn.html">去看这一页</a></div>
+        <div class="card"><h3>lockdep 与锁依赖检查</h3><ul><li>目标：理解系统为什么能在真正死锁前，就通过锁依赖图和上下文规则提前看出危险模式</li><li>重点：lockdep、依赖图、循环依赖、上下文违规、早期告警</li><li>读完后应能说清：为什么锁 bug 很多时候更像结构性关系问题，而不是某一把锁单独坏了</li></ul><a class="btn" href="kernel-lockdep-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第二十批开始补“并发正确性怎么从设计层往安全和调试层继续收紧”这层感觉：有时更新要先确认旧局面没变，有时对象持有边界要防止错误复活，而锁关系图则要在真死锁前就尽早报警。正确性不只靠原语本身，还靠更严密的协议和检查。</div>
+    </section>
+
+    <section class="panel" id="wave21">
+      <h2>第二十一批：把挂链关系、有序树索引和稀疏编号空间拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>list_head / hlist 与内核链表</h3><ul><li>目标：理解对象为什么常直接带着挂链节点，以便被组织进队列、桶和各种运行时关系里</li><li>重点：list_head、hlist、嵌入式节点、队列/桶/链、遍历与迁移</li><li>读完后应能说清：为什么链表在内核里首先是对象组织工具，而不是算法练习题</li></ul><a class="btn" href="kernel-list-hlist-cn.html">去看这一页</a></div>
+        <div class="card"><h3>rbtree 与红黑树</h3><ul><li>目标：理解对象如何按地址、时间、编号等键有序组织起来，以支持稳定查找和邻近关系</li><li>重点：rbtree、键、平衡、前驱/后继、范围语义</li><li>读完后应能说清：为什么很多区间和有序对象问题天然更像树问题，而不是链表问题</li></ul><a class="btn" href="kernel-rbtree-cn.html">去看这一页</a></div>
+        <div class="card"><h3>xarray 与稀疏索引</h3><ul><li>目标：理解大而稀疏的整数索引空间为什么需要专门结构来组织对象，而不是硬开巨大数组</li><li>重点：xarray、稀疏索引、槽位、范围扫描、索引空间治理</li><li>读完后应能说清：为什么很多页号或 ID 管理问题本质上是在治理稀疏编号空间</li></ul><a class="btn" href="kernel-xarray-sparse-index-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第二十一批开始补“对象到底被放在哪里、按什么维度被找到”这层感觉：有时对象只是挂进一条运行时关系链里，有时要按键保持有序索引，有时又是按巨大而稀疏的编号空间定位。结构选型其实是在回答‘你下一次准备怎么找到它’。</div>
+    </section>
+
+    <section class="panel" id="wave22">
+      <h2>第二十二批：把底层页块供应、虚拟连续映射和连续物理预留拆开</h2>
+      <div class="phase-grid">
+        <div class="card"><h3>buddy allocator 与伙伴系统分配</h3><ul><li>目标：理解底层物理页块为什么要按阶数组织、拆分和合并，而不是临时零散地拿页</li><li>重点：buddy allocator、order、拆分/合并、高阶页、外部碎片</li><li>读完后应能说清：为什么“空闲页还很多”并不等于“大块连续页还很好拿”</li></ul><a class="btn" href="kernel-buddy-allocator-cn.html">去看这一页</a></div>
+        <div class="card"><h3>vmalloc 与内核虚拟连续映射</h3><ul><li>目标：理解某些大区域为什么只要求内核看到连续地址，而不必强求底层物理页真的连在一起</li><li>重点：vmalloc、虚拟连续、物理不连续、页表映射、地址便利性</li><li>读完后应能说清：为什么 vmalloc 的核心不是“更大块”，而是“连续性转到虚拟地址层解决”</li></ul><a class="btn" href="kernel-vmalloc-cn.html">去看这一页</a></div>
+        <div class="card"><h3>CMA 与连续内存分配</h3><ul><li>目标：理解设备对连续物理内存的严格需求为什么常要提前规划，而不是等运行时碎片化后再碰运气</li><li>重点：CMA、预留区域、连续物理内存、可迁移页、长期可用性</li><li>读完后应能说清：为什么 CMA 真正保的是“未来还能清出连续块的机会”</li></ul><a class="btn" href="kernel-cma-contiguous-memory-cn.html">去看这一页</a></div>
+      </div>
+      <div class="tip">第二十二批开始补“内核拿内存时到底在追求哪一种连续性”这层感觉：有时底层必须拿得出连续物理页块，有时只要在虚拟地址上看起来连着就够了，而设备侧的严格需求又常常逼着系统更早就为连续物理内存留路。连续这件事，本身就分很多层。</div>
+    </section>
+
+    <section class="panel" id="relations">
+      <h2>模块之间最重要的几条关系</h2>
+      <table>
+        <thead><tr><th>模块 A</th><th>模块 B</th><th>为什么它们总被一起提到</th></tr></thead>
+        <tbody>
+          <tr><td>调度器</td><td>并发控制</td><td>任务什么时候切换、在哪里等待，会直接影响锁的持有和竞争。</td></tr>
+          <tr><td>内存管理</td><td>文件系统</td><td>页缓存把文件 I/O 和内存回收绑在了一起，所以很多文件读写问题本质上也是内存问题。</td></tr>
+          <tr><td>Core API</td><td>驱动框架</td><td>设备对象、引用计数、异步工作和日志，很多都不是驱动自己发明的，而是复用公共底座。</td></tr>
+          <tr><td>网络</td><td>调度 / 内存</td><td>网络路径要处理队列、缓冲、上下文切换和并发，性能问题常常跨多个底座模块。</td></tr>
+          <tr><td>启动</td><td>所有模块</td><td>启动阶段要先搭好最基本环境，后面的模块才能被一个个拉起并进入正常运行状态。</td></tr>
+          <tr><td>中断</td><td>驱动 / 网络 / 存储</td><td>很多硬件事件都通过中断通知内核，所以它几乎是设备路径的共同触发点。</td></tr>
+          <tr><td>系统调用边界</td><td>文件 / 进程 / 网络</td><td>很多上层请求都会在边界处正式进入内核，再被分发到不同子系统。</td></tr>
+          <tr><td>容器治理</td><td>调度 / 内存 / 网络 / 文件系统</td><td>容器并不是单独一块，而是把多个内核能力重新组合和约束。</td></tr>
+          <tr><td>观测</td><td>所有模块</td><td>很多性能和故障问题要靠跟踪和观测把多个模块的症状串成完整路径。</td></tr>
+          <tr><td>构建系统</td><td>驱动 / 测试 / 安全</td><td>配置和装配方式会直接影响系统里有哪些能力、哪些防护和哪些调试设施可用。</td></tr>
+          <tr><td>虚拟化</td><td>容器 / 安全 / 设备</td><td>它和容器同属隔离主题，但思路不同，同时又依赖更强的资源、边界和设备抽象。</td></tr>
+          <tr><td>VFS</td><td>块层</td><td>前者组织统一文件语义，后者组织真正设备 I/O，它们把“读文件”一路拆成多层路径。</td></tr>
+        </tbody>
+      </table>
+      <div class="note">学习内核时，最常见的误区不是“记不住细节”，而是把本来互相依赖的模块当成彼此独立的知识点来看。</div>
+    </section>
+
+    <section class="panel" id="advice">
+      <h2>使用建议</h2>
+      <div class="grid">
+        <div class="card"><h3>现在先别做什么</h3><ul><li>先别急着钻源码</li><li>先别强行记函数名</li><li>先别把所有总线和驱动都一起学</li><li>先别把容器和虚拟化混成一个概念</li></ul></div>
+        <div class="card"><h3>现在应该做到什么</h3><ul><li>能说出每个专题在系统里的角色</li><li>知道哪些是公共底座，哪些是对外能力</li><li>知道一块东西大概会和谁配合</li><li>遇到宽主题时，知道还可以进一步拆成更细的路径和对象模型</li></ul></div>
+        <div class="card"><h3>后面适合怎么问</h3><ul><li>“任务状态切换和调度器到底怎么连起来？”</li><li>“inode、dentry、file 三者最容易混的地方是什么？”</li><li>“写回路径为什么经常带来卡顿体感？”</li><li>“socket 视角和真实包路径最容易断裂在哪一段？”</li></ul></div>
+      </div>
+    </section>
+
+    <div class="footer">Linux 内核中文学习站首页</div>
+  </div>
+</body>
+</html>
