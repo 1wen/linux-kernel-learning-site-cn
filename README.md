@@ -1,5 +1,9 @@
 # Linux 内核中文学习站
 
+> 在线查看：<https://1wen.github.io/linux-kernel-learning-site-cn/>
+>
+> 建议直接打开在线首页，从 `index.html` 对应的总站入口开始阅读。
+
 这是一套面向初学者的 Linux 内核中文静态学习站。
 
 它的目标不是逐行讲源码，也不是完整翻译 Linux 内核自带的 `Documentation`，而是先帮助你建立整体地图：知道 Linux 内核有哪些大模块、每块负责什么、彼此为什么会互相牵连，然后再按问题继续深入。
